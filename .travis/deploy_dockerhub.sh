@@ -6,11 +6,9 @@ else
     TAG="$TRAVIS_BRANCH"
 fi
 
-IFS='/' read -ra array < "$TRAVIS_REPO_SLUG"
+TRAVIS_REPO_NAME=${TRAVIS_REPO_SLUG#*/}
 
-repo_name=arrIN=(${TRAVIS_REPO_SLUG//// })
+echo $TRAVIS_REPO_NAME
 
-echo $DOCKER_USER/${repo_name[1]}:$TAG
-
-docker build -f Dockerfile -t $DOCKER_USER/${repo_name[1]}:$TAG .
-docker push $DOCKER_USER/${repo_name[1]}:$TAG
+docker build -f Dockerfile -t $DOCKER_USER/$TRAVIS_REPO_NAME:$TAG .
+docker push $DOCKER_USER/$TRAVIS_REPO_NAME:$TAG
