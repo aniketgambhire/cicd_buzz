@@ -8,9 +8,9 @@ fi
 
 IFS='/' read -ra array < "$TRAVIS_REPO_SLUG"
 
-repo_name=${array[${#arr[@]}-1]}
+repo_name=arrIN=(${TRAVIS_REPO_SLUG//// })
 
-docker build -f Dockerfile -t $DOCKER_USER/$repo_name:$TAG .
-docker push $DOCKER_USER/$repo_name:$TAG
+echo $DOCKER_USER/${repo_name[1]}:$TAG
 
-echo $DOCKER_USER/$repo_name:$TAG
+docker build -f Dockerfile -t $DOCKER_USER/${repo_name[1]}:$TAG .
+docker push $DOCKER_USER/${repo_name[1]}:$TAG
